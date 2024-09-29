@@ -1,0 +1,9 @@
+[package]
+name = "rust_fibonacci"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+num-bigint = "0.4.6"
+num-traits = "0.2.19"
+tramp = "0.3.0"
