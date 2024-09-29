@@ -1,5 +1,6 @@
 use num_bigint::BigUint;
 use num_traits::{One, Zero};
+use std::cmp::{Ord, Ordering};
 use std::io;
 use tramp::{rec_call, rec_ret, tramp, Rec};
 
@@ -39,13 +40,12 @@ fn fibonacci(n: usize, accumulator: BigUint, previous: BigUint) -> BigUint {
 }
 
 fn tail_opt_fibonacci(n: usize, accumulator: BigUint, previous: BigUint) -> Rec<BigUint> {
-    if n <= 0 {
-        rec_ret!(accumulator)
-    } else {
-        rec_call!(tail_opt_fibonacci(
+    match n.cmp(&0) {
+        Ordering::Equal | Ordering::Less => rec_ret!(accumulator),
+        Ordering::Greater => rec_call!(tail_opt_fibonacci(
             n - 1,
             &accumulator + previous,
             accumulator
-        ))
+        )),
     }
 }
